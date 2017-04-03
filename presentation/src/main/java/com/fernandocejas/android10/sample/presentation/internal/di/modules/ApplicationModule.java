@@ -16,6 +16,9 @@
 package com.fernandocejas.android10.sample.presentation.internal.di.modules;
 
 import android.content.Context;
+
+import com.birbit.android.jobqueue.JobManager;
+import com.birbit.android.jobqueue.config.Configuration;
 import com.fernandocejas.android10.sample.data.cache.UserCache;
 import com.fernandocejas.android10.sample.data.cache.UserCacheImpl;
 import com.fernandocejas.android10.sample.data.executor.JobExecutor;
@@ -25,16 +28,21 @@ import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
 import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.UIThread;
-import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
  */
 @Module
 public class ApplicationModule {
+  private static final int MIN_CONSUMER_COUNT = 1;
+  private static final int MAX_CONSUMER_COUNT = 5;
+  private static final int LOAD_FACTOR = 1;
+
   private final AndroidApplication application;
 
   public ApplicationModule(AndroidApplication application) {
@@ -55,6 +63,14 @@ public class ApplicationModule {
 
   @Provides @Singleton UserCache provideUserCache(UserCacheImpl userCache) {
     return userCache;
+  }
+
+  @Provides @Singleton public JobManager provideJobManager(Context context) {
+    Configuration config = new Configuration.Builder(context).minConsumerCount(MIN_CONSUMER_COUNT)
+            .maxConsumerCount(MAX_CONSUMER_COUNT)
+            .loadFactor(LOAD_FACTOR)
+            .build();
+    return new JobManager(config);
   }
 
   @Provides @Singleton UserRepository provideUserRepository(UserDataRepository userDataRepository) {
