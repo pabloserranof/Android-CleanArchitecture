@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <!--
+     The domain project does not require any resource file.
+     However, this file is needed as a workaround for a bug in the library JobQueue that requires a R.txt file even for module projects.
+ -->
+  <string name="app_name">Android Clean Architecture</string>
+</resources>

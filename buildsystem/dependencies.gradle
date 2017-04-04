@@ -60,7 +60,8 @@ ext {
       javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
       javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
       rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-      arrow:              "com.fernandocejas:arrow:${arrowVersion}"
+      arrow:              "com.fernandocejas:arrow:${arrowVersion}",
+      jobqueue:           "com.birbit:android-priority-jobqueue:${jobqueueVersion}"
   ]
 
   domainTestDependencies = [
