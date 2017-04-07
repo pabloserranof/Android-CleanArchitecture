@@ -16,6 +16,8 @@
 package com.fernandocejas.android10.sample.presentation.presenter;
 
 import android.support.annotation.NonNull;
+
+import com.fernandocejas.android10.sample.domain.TaskScheduler;
 import com.fernandocejas.android10.sample.domain.User;
 import com.fernandocejas.android10.sample.domain.exception.DefaultErrorBundle;
 import com.fernandocejas.android10.sample.domain.exception.ErrorBundle;
@@ -27,6 +29,7 @@ import com.fernandocejas.android10.sample.presentation.internal.di.PerActivity;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
+
 import javax.inject.Inject;
 
 /**
@@ -40,12 +43,14 @@ public class UserDetailsPresenter implements Presenter {
 
   private final GetUserDetails getUserDetailsUseCase;
   private final UserModelDataMapper userModelDataMapper;
+  private final TaskScheduler taskScheduler;
 
   @Inject
   public UserDetailsPresenter(GetUserDetails getUserDetailsUseCase,
-      UserModelDataMapper userModelDataMapper) {
+      UserModelDataMapper userModelDataMapper, TaskScheduler taskScheduler) {
     this.getUserDetailsUseCase = getUserDetailsUseCase;
     this.userModelDataMapper = userModelDataMapper;
+    this.taskScheduler = taskScheduler;
   }
 
   public void setView(@NonNull UserDetailsView view) {

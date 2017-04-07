@@ -1,9 +1,5 @@
 package com.fernandocejas.android10.sample.domain.interactor;
 
-/**
- * Created by pablo on 05/04/2017.
- */
-
 import java.lang.ref.WeakReference;
 
 /**

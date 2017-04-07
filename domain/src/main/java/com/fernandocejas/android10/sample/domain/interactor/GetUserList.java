@@ -20,7 +20,6 @@ import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
 import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
 import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,15 +34,10 @@ public class GetUserList extends UseCase<List<User>, Void> {
 
     private final UserRepository userRepository;
 
-    private final UseCaseHandler useCaseHandler;
-    private final List<UseCaseCall> useCaseCalls = new LinkedList<>();
-    private final List<OnErrorCallback> globalOnErrorCallbacks = new LinkedList<>();
-
     @Inject
     GetUserList(UserRepository userRepository, ThreadExecutor threadExecutor,
-                PostExecutionThread postExecutionThread, UseCaseHandler useCaseHandler) {
+                PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.useCaseHandler = useCaseHandler;
         this.userRepository = userRepository;
     }
 

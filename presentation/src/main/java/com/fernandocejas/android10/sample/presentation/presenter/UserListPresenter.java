@@ -48,7 +48,6 @@ public class UserListPresenter implements Presenter {
 
     private final GetUserList getUserListUseCase;
     private final UserModelDataMapper userModelDataMapper;
-
     private final TaskScheduler taskScheduler;
 
     @Inject
