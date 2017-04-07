@@ -15,11 +15,15 @@
  */
 package com.fernandocejas.android10.sample.data.repository.datasource;
 
+import android.util.Log;
+
 import com.fernandocejas.android10.sample.data.cache.UserCache;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 import com.fernandocejas.android10.sample.data.net.RestApi;
-import io.reactivex.Observable;
+
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * {@link UserDataStore} implementation based on connections to the api (Cloud).
@@ -41,6 +45,7 @@ class CloudUserDataStore implements UserDataStore {
   }
 
   @Override public Observable<List<UserEntity>> userEntityList() {
+    Log.d("", "userEntityList");
     return this.restApi.userEntityList();
   }
 

@@ -1,10 +1,38 @@
 package com.fernandocejas.android10.sample.domain.interactor;
 
+import android.util.Log;
+
 /**
  * This class wrap the use case to invoke it.
  */
+public final class UseCaseWrapper {
+    private final UseCase useCase;
+    private final UseCaseParams useCaseParams;
+    private final DefaultObserver defaultObserver;
 
-public class UseCaseWrapper {
+    public UseCaseWrapper(UseCase useCase, UseCaseParams useCaseParams, DefaultObserver defaultObserver) {
+        this.useCase = useCase;
+        this.useCaseParams = useCaseParams;
+        this.defaultObserver = defaultObserver;
+    }
 
-    public void execute(){}
+    public void execute() {
+        try {
+            useCase.execute(defaultObserver, useCaseParams);
+        }catch (Exception e){
+            notifyException(e);
+        }
+    }
+
+    private void notifyException(Exception exception) {
+        if (defaultObserver != null) {
+            Log.d("UseCaseWrapper", "notifyException");
+           // errorHandler.notifyException(exception, useCaseParams.getOnErrorCallback());
+        }
+    }
+
+    public DefaultObserver getDefaultObserver(){
+        return defaultObserver;
+    }
+
 }

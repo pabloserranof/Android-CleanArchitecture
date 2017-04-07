@@ -23,8 +23,12 @@ import com.fernandocejas.android10.sample.data.cache.UserCache;
 import com.fernandocejas.android10.sample.data.cache.UserCacheImpl;
 import com.fernandocejas.android10.sample.data.executor.JobExecutor;
 import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
+import com.fernandocejas.android10.sample.domain.TaskScheduler;
+import com.fernandocejas.android10.sample.domain.exception.ErrorHandler;
 import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
 import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
+import com.fernandocejas.android10.sample.domain.interactor.UseCaseHandler;
+import com.fernandocejas.android10.sample.domain.jobqueue.TaskSchedulerJobQueue;
 import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.UIThread;
@@ -71,6 +75,16 @@ public class ApplicationModule {
             .loadFactor(LOAD_FACTOR)
             .build();
     return new JobManager(config);
+  }
+
+  @Provides @Singleton
+  UseCaseHandler provideUseCaseHandler(TaskScheduler taskScheduler, ErrorHandler errorHandler) {
+    return new UseCaseHandler(taskScheduler, errorHandler);
+  }
+
+  @Provides @Singleton
+  TaskScheduler provideTaskScheduler(JobManager jobManager) {
+    return new TaskSchedulerJobQueue(jobManager);
   }
 
   @Provides @Singleton UserRepository provideUserRepository(UserDataRepository userDataRepository) {

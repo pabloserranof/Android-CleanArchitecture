@@ -59,6 +59,7 @@ class ApiConnection implements Callable<String> {
 
   private void connectToApi() {
     OkHttpClient okHttpClient = this.createClient();
+
     final Request request = new Request.Builder()
         .url(this.url)
         .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
