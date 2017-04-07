@@ -22,11 +22,14 @@ import com.fernandocejas.android10.sample.domain.interactor.UseCaseWrapper;
  * 4. Cancelled when the user press back TODO
  */
 public class GetUserListUseCaseWrapperJob extends Job {
+
+    public static final String UNIQUE_ID = "Unique_Id";
+
     private static final int PRIORITY_NORMAL = 3;
     private final UseCaseWrapper useCaseWrapper;
 
-    public GetUserListUseCaseWrapperJob(UseCaseWrapper useCaseWrapper) {
-        super(new Params(PRIORITY_NORMAL).requireNetwork());
+    public GetUserListUseCaseWrapperJob(UseCaseWrapper useCaseWrapper, String id) {
+        super(new Params(PRIORITY_NORMAL).requireNetwork().singleInstanceBy(id));
         this.useCaseWrapper = useCaseWrapper;
     }
 

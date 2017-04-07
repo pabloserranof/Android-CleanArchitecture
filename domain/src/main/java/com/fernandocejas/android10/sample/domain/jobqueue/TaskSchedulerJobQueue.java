@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * This is an implementation for a TaskScheduler based on the android-priority-job-queue.
  */
 
-public class TaskSchedulerJobQueue implements TaskScheduler {
+public class TaskSchedulerJobQueue implements TaskScheduler<Job> {
 
     private static final String TAG = TaskSchedulerJobQueue.class.getName();
 
@@ -60,5 +60,11 @@ public class TaskSchedulerJobQueue implements TaskScheduler {
     public void execute(Job useCaseWrapperJob) {
         Log.d(TAG, "execute");
         jobManager.addJobInBackground(useCaseWrapperJob);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "count " + jobManager.count());
+            }
+        }).start();
     }
 }

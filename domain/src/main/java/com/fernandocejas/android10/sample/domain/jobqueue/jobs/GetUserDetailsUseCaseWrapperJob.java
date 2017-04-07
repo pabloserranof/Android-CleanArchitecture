@@ -17,7 +17,7 @@ import com.fernandocejas.android10.sample.domain.interactor.UseCaseWrapper;
  * Requirements for the job GetUserListUseCaseWrapperJob:
  * 1. Requires Network
  * 2. Non persisted
- * 3. One single job in the queue TODO
+ * 3. One single job in the queue
  * 4. Cancelled when the user press back TODO
  */
 
@@ -26,8 +26,8 @@ public class GetUserDetailsUseCaseWrapperJob extends Job {
     private static final int PRIORITY_NORMAL = 3;
     private final UseCaseWrapper useCaseWrapper;
 
-    public GetUserDetailsUseCaseWrapperJob(UseCaseWrapper useCaseWrapper) {
-        super(new Params(PRIORITY_NORMAL).requireNetwork());
+    public GetUserDetailsUseCaseWrapperJob(UseCaseWrapper useCaseWrapper, int userId) {
+        super(new Params(PRIORITY_NORMAL).requireNetwork().singleInstanceBy(String.valueOf(userId)));
         this.useCaseWrapper = useCaseWrapper;
     }
 

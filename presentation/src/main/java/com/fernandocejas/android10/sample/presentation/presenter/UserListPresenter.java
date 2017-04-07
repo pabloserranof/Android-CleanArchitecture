@@ -128,7 +128,7 @@ public class UserListPresenter implements Presenter {
     private void getUserList() {
 
         UseCaseWrapper useCaseWrapper = new UseCaseWrapper(getUserListUseCase, null, new UserListObserver());
-        GetUserListUseCaseWrapperJob useCaseWrapperJob = new GetUserListUseCaseWrapperJob(useCaseWrapper);
+        GetUserListUseCaseWrapperJob useCaseWrapperJob = new GetUserListUseCaseWrapperJob(useCaseWrapper, GetUserListUseCaseWrapperJob.UNIQUE_ID);
 
         taskScheduler.execute(useCaseWrapperJob);
     }

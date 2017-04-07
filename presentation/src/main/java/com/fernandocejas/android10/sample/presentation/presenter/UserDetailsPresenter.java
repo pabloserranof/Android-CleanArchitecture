@@ -80,7 +80,7 @@ public class UserDetailsPresenter implements Presenter {
 
   private void getUserDetails(int userId) {
     UseCaseWrapper useCaseWrapper = new UseCaseWrapper(getUserDetailsUseCase, Params.forUser(userId), new UserDetailsObserver());
-    GetUserDetailsUseCaseWrapperJob useCaseWrapperJob = new GetUserDetailsUseCaseWrapperJob(useCaseWrapper);
+    GetUserDetailsUseCaseWrapperJob useCaseWrapperJob = new GetUserDetailsUseCaseWrapperJob(useCaseWrapper, userId);
     taskScheduler.execute(useCaseWrapperJob);
   }
 
