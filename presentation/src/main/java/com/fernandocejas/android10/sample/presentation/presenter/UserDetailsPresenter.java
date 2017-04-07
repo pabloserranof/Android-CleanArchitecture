@@ -24,6 +24,8 @@ import com.fernandocejas.android10.sample.domain.exception.ErrorBundle;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultObserver;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails.Params;
+import com.fernandocejas.android10.sample.domain.interactor.UseCaseWrapper;
+import com.fernandocejas.android10.sample.domain.jobqueue.jobs.GetUserDetailsUseCaseWrapperJob;
 import com.fernandocejas.android10.sample.presentation.exception.ErrorMessageFactory;
 import com.fernandocejas.android10.sample.presentation.internal.di.PerActivity;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
@@ -77,7 +79,9 @@ public class UserDetailsPresenter implements Presenter {
   }
 
   private void getUserDetails(int userId) {
-    this.getUserDetailsUseCase.execute(new UserDetailsObserver(), Params.forUser(userId));
+    UseCaseWrapper useCaseWrapper = new UseCaseWrapper(getUserDetailsUseCase, Params.forUser(userId), new UserDetailsObserver());
+    GetUserDetailsUseCaseWrapperJob useCaseWrapperJob = new GetUserDetailsUseCaseWrapperJob(useCaseWrapper);
+    taskScheduler.execute(useCaseWrapperJob);
   }
 
   private void showViewLoading() {

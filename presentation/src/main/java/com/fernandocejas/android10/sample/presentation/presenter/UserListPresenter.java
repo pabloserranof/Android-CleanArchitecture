@@ -25,7 +25,7 @@ import com.fernandocejas.android10.sample.domain.exception.ErrorBundle;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultObserver;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserList;
 import com.fernandocejas.android10.sample.domain.interactor.UseCaseWrapper;
-import com.fernandocejas.android10.sample.domain.jobqueue.GetUserListUseCaseWrapperJob;
+import com.fernandocejas.android10.sample.domain.jobqueue.jobs.GetUserListUseCaseWrapperJob;
 import com.fernandocejas.android10.sample.presentation.exception.ErrorMessageFactory;
 import com.fernandocejas.android10.sample.presentation.internal.di.PerActivity;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
