@@ -18,7 +18,6 @@ import com.fernandocejas.android10.sample.domain.interactor.UseCaseWrapper;
  * 1. Requires Network
  * 2. Non persisted
  * 3. One single job in the queue
- * 4. Cancelled when the user press back TODO
  */
 
 public class GetUserDetailsUseCaseWrapperJob extends Job {
