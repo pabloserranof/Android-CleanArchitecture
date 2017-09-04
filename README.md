@@ -1,71 +1,28 @@
-Android-CleanArchitecture [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture.svg?branch=master)](https://travis-ci.org/android10/Android-CleanArchitecture)
+Android-CleanArchitecture with JobScheduler [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture.svg?branch=master)](https://travis-ci.org/android10/Android-CleanArchitecture)
 =========================
 
-This is a sample app that is part of a blog post I have written about how to architect android application using the Uncle Bob's clean architecture approach. 
+This is a fork of the Android MVP Clean Architecture template project https://github.com/android10/Android-CleanArchitecture
 
-[Architecting Android…The clean way?](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
+The problem in this architecture
+--------------------------------
+There is no infrastructure to automatically retry unsuccessful Use Cases. If a Use Case fails for some reason (typically due to a network error but not neccesarily) the UI shows an error message and the user can manually retry the Use Case.
 
-[Architecting Android…The evolution](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
+A solution: Clean Archiceture with JobScheduler
+-----------------------------------------------
+This template project adds a Job Scheduler to the original one to allow to automatically retry and customize the conditions of unsucessful Use Cases.
 
-[Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
-
-[Clean Architecture…Dynamic Parameters in Use Cases](http://fernandocejas.com/2016/12/24/clean-architecture-dynamic-parameters-in-use-cases/)
-
-[Demo video of this sample](http://youtu.be/XSjV4sG3ni0)
-
-Clean architecture
+The Job Scheduler
 -----------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture.png)
+This template project uses Android-priority-jobqueue as the Job Scheduler https://github.com/yigit/android-priority-jobqueue
+Other alternatives are GCM Network Manager (requires Google Play Services) or Android-job by Evernote.
 
-Architectural approach
------------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture_layers.png)
-
-Architectural reactive approach
------------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture_layers_details.png)
-
-Local Development
------------------
-
-Here are some useful Gradle/adb commands for executing this example:
-
- * `./gradlew clean build` - Build the entire example and execute unit and integration tests plus lint check.
- * `./gradlew installDebug` - Install the debug apk on the current connected device.
- * `./gradlew runUnitTests` - Execute domain and data layer tests (both unit and integration).
- * `./gradlew runAcceptanceTests` - Execute espresso and instrumentation acceptance tests.
- 
-Discussions
------------------
-
-Refer to the issues section: https://github.com/android10/Android-CleanArchitecture/issues
- 
-
-Code style
------------
-
-Here you can download and install the java codestyle.
-https://github.com/android10/java-code-styles
+The changes in Clean Architecture
+----------------------------------
+1. Wrap your Use Cases into UseCaseWrapper(UseCase, Params, ObserverCallbacks). Your Use Cases shouldn't be modified or affected at all.
+2. Wrap and extend each UseCaseWrapper into Jobs (concrete implementation of the JobScheduler). Indicate the requirements of this Job. Example: requireNetwork, persist, unique, retry policy, etc.
+3. Instead of executing the Use Cases in the Presenters inject the Job Scheduler in the presenters and add the UseCaseWrapperJob to the Job Scheduler. The Job Scheduler will take care of them according to their requirements.
+     
+     `jobScheduler.execute(useCaseWrapperJob)`
 
 
-License
---------
 
-    Copyright 2016 Fernando Cejas
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
-
-![http://www.fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
-
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--CleanArchitecture-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/909)
